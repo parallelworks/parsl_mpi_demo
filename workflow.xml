@@ -30,11 +30,11 @@
             ></param>
             <when value="Yes">
                 <param 
-                    name='conda_sh' 
+                    name='conda_dir' 
                     label='Path to conda environment' 
                     type='text' 
-                    value='__WORKDIR__/.miniconda3c/etc/profile.d/conda.sh' 
-                    help='Path to use in source /path/to/conda.sh' 
+                    value='__WORKDIR__/pw/miniconda3/' 
+                    help='Path to conda installation directory' 
                 ></param>
                 <param 
                     name='conda_env' 
@@ -46,10 +46,10 @@
             </when>
             <when value="No">
                 <param 
-                    name='load_env' 
-                    label='Command to load Jupyter' 
+                    name='load_parsl' 
+                    label='Command to Parsl' 
                     type='text' 
-                    value='source __WORKDIR__/.miniconda3c/etc/profile.d/conda.sh; conda activate parsl-1.2' 
+                    value='source __WORKDIR__/pw/miniconda3/etc/profile.d/conda.sh; conda activate parsl-1.2' 
                     help='To load the environment, enter the appropriate command, for example: module load module-name or source path/to/env.sh.' 
                 ></param>
           </when>

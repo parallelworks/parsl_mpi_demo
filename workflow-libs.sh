@@ -20,16 +20,19 @@ cluster_rsync_exec() {
         # Load resource inputs
         source ${resource_dir}/inputs.sh
 
+        echo; echo "Running ${path_to_rsync_exec_sh} in ${resource_publicIp}"
+
         # Copy the file containing this function to the resource directory
         cp ${BASH_SOURCE[0]} ${resource_dir}
         
         # Rsync resource directory in user space to job directory in the resource
         origin=${resource_dir}/
         destination=${resource_publicIp}:${resource_jobdir}/${resource_label}/
+        echo "rsync -avzq --rsync-path="mkdir -p ${resource_jobdir} && rsync " ${origin} ${destination}"
         rsync -avzq --rsync-path="mkdir -p ${resource_jobdir} && rsync " ${origin} ${destination}
         
         # Execute the script
-        echo; echo "ssh -o StrictHostKeyChecking=no ${resource_publicIp} ${resource_jobdir}/${resource_label}/cluster_rsync_exec.sh"
+        echo "ssh -o StrictHostKeyChecking=no ${resource_publicIp} ${resource_jobdir}/${resource_label}/cluster_rsync_exec.sh"
         ssh -o StrictHostKeyChecking=no ${resource_publicIp} ${resource_jobdir}/${resource_label}/cluster_rsync_exec.sh
     done
 }

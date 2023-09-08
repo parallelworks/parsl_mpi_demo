@@ -74,10 +74,10 @@ with open('inputs.json') as inputs_json:
 
 # mpi_load = 'source /contrib/alvaro/ompi/env.sh'
 mpi_load = form_inputs['mpi']['load']
-repeats = form_inputs['mpi']['repeats']
-cores_per_node = form_inputs['mpi']['cores_per_node']
-nodes_per_block = form_inputs['mpi']['nodes_per_block']
-np = form_inputs['mpi']['np']
+repeats = int(form_inputs['mpi']['repeats'])
+cores_per_node = int(form_inputs['mpi']['cores_per_node'])
+nodes_per_block = int(form_inputs['mpi']['nodes_per_block'])
+np = cores_per_node * nodes_per_block
 partition = form_inputs['partition']
 mpi_c_source_code = './mpitest.c'
 

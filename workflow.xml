@@ -1,0 +1,95 @@
+<tool id='NA' name='NA'>
+  <command interpreter='bash'>main.sh</command>
+  <inputs>
+      <section name='pwrl_mpi_host' type='section' title='MPI Host' expanded='true'>
+        <param 
+            name='resource' 
+            type='computeResource' 
+            label='Resource' 
+            hideUserWorkspace='true' 
+            help='Resource to run the script'>
+        </param>
+        <param 
+            name='partition' 
+            label='SLURM Partition' 
+            type='text' 
+            value='' 
+            help='Name of the SLURM partition for MPI job submission' 
+        ></param>
+        <conditional name="conda_install_cond">
+            <param 
+                name="conda_install" 
+                type="boolean" 
+                truevalue="Yes" 
+                falsevalue="No" 
+                checked="True" 
+                label="Install miniconda if not there?" 
+                help='Select Yes to install miniconda if the above directory does not exist'
+                optional='true' 
+                float="right"
+            ></param>
+            <when value="Yes">
+                <param 
+                    name='conda_sh' 
+                    label='Path to conda environment' 
+                    type='text' 
+                    value='__WORKDIR__/.miniconda3c/etc/profile.d/conda.sh' 
+                    help='Path to use in source /path/to/conda.sh' 
+                ></param>
+                <param 
+                    name='conda_env' 
+                    label='Conda environment' 
+                    type='text' 
+                    value='parsl-1.2' 
+                    help='Environment with Parsl' 
+                ></param>
+            </when>
+            <when value="No">
+                <param 
+                    name='load_env' 
+                    label='Command to load Jupyter' 
+                    type='text' 
+                    value='source __WORKDIR__/.miniconda3c/etc/profile.d/conda.sh; conda activate parsl-1.2' 
+                    help='To load the environment, enter the appropriate command, for example: module load module-name or source path/to/env.sh.' 
+                ></param>
+          </when>
+        </conditional>
+    </section>
+    <section name='mpi' type='section' title='Main Host' expanded='true'>
+        <param 
+            name='load' 
+            label='Command to load MPI' 
+            type='text' 
+            value='source /contrib/__PW_USER__/ompi/env.sh' 
+            help='To load the environment, enter the appropriate command, for example: module load module-name or source path/to/env.sh.'
+        ></param>
+        <param 
+            name='cores_per_node' 
+            label='Cores per node' 
+            type='integer' 
+            min="1" 
+            max="64" 
+            help='Cores per node for the MPI job' 
+            value='2'
+        ></param>
+        <param 
+            name='nodes_per_block' 
+            label='Number of Nodes' 
+            type='integer' 
+            min="1" 
+            max="10" 
+            help='Number of nodes for the MPI job' 
+            value='2'
+        ></param>
+        <param 
+            name='repeats' 
+            label='Parallel Repeats' 
+            type='integer' 
+            min="1" 
+            max="10" 
+            help='Number of parallel MPI jobs. Use this parameter to run the same MPI job multiple times in parallel' 
+            value='2'
+        ></param>
+    </section>
+  </inputs>
+</tool>

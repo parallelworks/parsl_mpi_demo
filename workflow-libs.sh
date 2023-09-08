@@ -16,7 +16,7 @@ cluster_rsync_exec() {
         chmod +x ${path_to_rsync_exec_sh}
         resource_dir=$(dirname ${path_to_rsync_exec_sh})
         resource_label=$(basename ${resource_dir})
-        
+
         # Load resource inputs
         source ${resource_dir}/inputs.sh
 
@@ -29,6 +29,7 @@ cluster_rsync_exec() {
         rsync -avzq --rsync-path="mkdir -p ${resource_jobdir} && rsync " ${origin} ${destination}
         
         # Execute the script
+        echo; echo "ssh -o StrictHostKeyChecking=no ${resource_publicIp} ${resource_jobdir}/${resource_label}/cluster_rsync_exec.sh"
         ssh -o StrictHostKeyChecking=no ${resource_publicIp} ${resource_jobdir}/${resource_label}/cluster_rsync_exec.sh
     done
 }
